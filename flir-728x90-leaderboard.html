@@ -3,9 +3,12 @@
 
 <head>
     <meta charset="UTF-8">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="ad.size" content="width=728,height=90">
-    <title>FLIR – Detecta lo Invisible</title>
+    <title>FLIR – Termografía Profesional</title>
 
     <!-- AMP4ADS Required Scripts -->
     <script async src="https://cdn.ampproject.org/amp4ads-v0.js"></script>
@@ -30,7 +33,7 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
         }
 
         .ad-container {
@@ -124,7 +127,7 @@
         .hint {
             color: #fff;
             font-size: 10px;
-            background: rgba(255, 107, 0, 0.9);
+            background: rgba(197, 22, 24, 0.9);
             padding: 4px 8px;
             border-radius: 4px;
             text-align: center;
@@ -148,23 +151,23 @@
         }
 
         .cta {
-            background: #ff6b00;
+            background: #c51618;
             color: #fff;
             padding: 10px 20px;
-            border-radius: 25px;
+            border-radius: 4px;
             font-size: 12px;
             font-weight: bold;
             text-decoration: none;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(255, 107, 0, 0.4);
+            box-shadow: 0 4px 15px rgba(197, 22, 24, 0.4);
             transition: all 0.3s ease;
             white-space: nowrap;
         }
 
         .cta:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(255, 107, 0, 0.6);
-            background: #ff8533;
+            box-shadow: 0 6px 20px rgba(197, 22, 24, 0.6);
+            background: #a01214;
         }
 
         .thermal-glow {
@@ -186,7 +189,7 @@
             top: 50%;
             left: 80px;
             transform: translate(-50%, -50%) scale(0);
-            background: rgba(255, 107, 0, 0.95);
+            background: rgba(197, 22, 24, 0.95);
             color: #fff;
             padding: 8px 12px;
             border-radius: 6px;
@@ -220,17 +223,17 @@
                 width="160" height="90" layout="fill"></amp-img>
             <div class="thermal-glow" id="thermalGlow"></div>
             <div class="thermal-cursor" id="thermalCursor"></div>
-            <div class="detection-badge" id="detectionBadge">⚠️ ¡Falla Detectada!</div>
+            <div class="detection-badge" id="detectionBadge">Anomalía Térmica Detectada</div>
         </div>
 
         <div class="content-section">
             <div class="text-content">
                 <div class="logo">FLIR</div>
-                <div class="tagline">Detecta lo Invisible</div>
-                <div class="hint" id="hint">👆 Mueve el cursor sobre la imagen</div>
+                <div class="tagline">Termografía Profesional</div>
+                <div class="hint" id="hint">Deslice sobre la imagen</div>
             </div>
             <a href="https://www.colvinycia.cl/collections/camaras-termicas-flir" target="_blank" class="cta"
-                id="ctaButton">Ver Cámaras →</a>
+                id="ctaButton">VER CAMARAS</a>
         </div>
     </div>
 
@@ -255,7 +258,7 @@
             function updateThermalReveal(x, y) {
                 thermal.style.maskImage = `radial-gradient(circle ${revealRadius}px at ${x}px ${y}px, black 100%, transparent 101%)`;
                 thermal.style.webkitMaskImage = `radial-gradient(circle ${revealRadius}px at ${x}px ${y}px, black 100%, transparent 101%)`;
-                glow.style.background = `radial-gradient(circle ${revealRadius}px at ${x}px ${y}px, rgba(255, 107, 0, 0.3) 0%, transparent 70%)`;
+                glow.style.background = `radial-gradient(circle ${revealRadius}px at ${x}px ${y}px, rgba(197, 22, 24, 0.3) 0%, transparent 70%)`;
                 cursor.style.left = x + 'px';
                 cursor.style.top = y + 'px';
                 checkDetection(x, y);

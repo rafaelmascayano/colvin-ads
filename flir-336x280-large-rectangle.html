@@ -3,9 +3,12 @@
 
 <head>
     <meta charset="UTF-8">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="ad.size" content="width=336,height=280">
-    <title>FLIR – Detecta lo Invisible</title>
+    <title>FLIR – Termografía Profesional</title>
 
     <script async src="https://cdn.ampproject.org/amp4ads-v0.js"></script>
     <script async custom-element="amp-animation" src="https://cdn.ampproject.org/v0/amp-animation-0.1.js"></script>
@@ -29,7 +32,7 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
         }
 
         .ad-container {
@@ -136,7 +139,7 @@
             background: #000;
             color: #fff;
             padding: 12px 24px;
-            border-radius: 25px;
+            border-radius: 4px;
             font-size: 14px;
             font-weight: bold;
             text-decoration: none;
@@ -158,7 +161,7 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%) scale(0);
-            background: rgba(255, 107, 0, 0.95);
+            background: rgba(197, 22, 24, 0.95);
             color: #fff;
             padding: 16px 22px;
             border-radius: 8px;
@@ -167,7 +170,7 @@
             text-align: center;
             z-index: 15;
             pointer-events: none;
-            box-shadow: 0 8px 30px rgba(255, 107, 0, 0.5);
+            box-shadow: 0 8px 30px rgba(197, 22, 24, 0.5);
             opacity: 0;
         }
 
@@ -219,14 +222,14 @@
         <div class="thermal-cursor" id="thermalCursor"></div>
 
         <div class="detection-badge" id="detectionBadge">
-            ⚠️ ¡Falla Detectada!<br>
-            <small style="font-weight:normal; font-size:12px;">Presiona el botón para ver cámaras FLIR</small>
+            Anomalía Térmica Detectada<br>
+            <small style="font-weight:normal; font-size:12px;">Identifique fallas antes de que ocurran</small>
         </div>
 
         <div class="content-overlay">
-            <div class="hint" id="hint">👆 Mueve el cursor para detectar el punto caliente</div>
+            <div class="hint" id="hint">Deslice para revelar la imagen térmica</div>
             <a href="https://www.colvinycia.cl/collections/camaras-termicas-flir" target="_blank" class="cta"
-                id="ctaButton">Ver Cámaras FLIR →</a>
+                id="ctaButton">VER CAMARAS FLIR</a>
         </div>
     </div>
 
@@ -251,7 +254,7 @@
             function updateThermalReveal(x, y) {
                 thermal.style.maskImage = `radial-gradient(circle ${revealRadius}px at ${x}px ${y}px, black 100%, transparent 101%)`;
                 thermal.style.webkitMaskImage = `radial-gradient(circle ${revealRadius}px at ${x}px ${y}px, black 100%, transparent 101%)`;
-                glow.style.background = `radial-gradient(circle ${revealRadius}px at ${x}px ${y}px, rgba(255, 107, 0, 0.3) 0%, transparent 70%)`;
+                glow.style.background = `radial-gradient(circle ${revealRadius}px at ${x}px ${y}px, rgba(197, 22, 24, 0.3) 0%, transparent 70%)`;
                 cursor.style.left = x + 'px';
                 cursor.style.top = y + 'px';
                 checkDetection(x, y);

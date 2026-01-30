@@ -3,9 +3,12 @@
 
 <head>
     <meta charset="UTF-8">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="ad.size" content="width=970,height=250">
-    <title>FLIR – Detecta lo Invisible</title>
+    <title>FLIR – Termografía Profesional</title>
 
     <script async src="https://cdn.ampproject.org/amp4ads-v0.js"></script>
     <script async custom-element="amp-animation" src="https://cdn.ampproject.org/v0/amp-animation-0.1.js"></script>
@@ -29,7 +32,7 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
         }
 
         .ad-container {
@@ -111,7 +114,7 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%) scale(0);
-            background: rgba(255, 107, 0, 0.95);
+            background: rgba(197, 22, 24, 0.95);
             color: #fff;
             padding: 15px 20px;
             border-radius: 8px;
@@ -120,7 +123,7 @@
             text-align: center;
             z-index: 15;
             pointer-events: none;
-            box-shadow: 0 8px 30px rgba(255, 107, 0, 0.5);
+            box-shadow: 0 8px 30px rgba(197, 22, 24, 0.5);
             opacity: 0;
         }
 
@@ -148,7 +151,7 @@
             font-size: 12px;
             background: rgba(0, 0, 0, 0.8);
             padding: 8px 16px;
-            border-radius: 20px;
+            border-radius: 4px;
             animation: pulse 2s ease-in-out infinite;
         }
 
@@ -173,93 +176,93 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            padding: 30px 50px;
-            gap: 25px;
+            padding: 20px 35px;
+            gap: 12px;
         }
 
         .header {
             display: flex;
             align-items: center;
-            gap: 20px;
+            gap: 15px;
         }
 
         .logo {
             color: #fff;
-            font-size: 36px;
+            font-size: 26px;
             font-weight: bold;
-            letter-spacing: 4px;
+            letter-spacing: 3px;
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
         }
 
         .badge {
-            background: #ff6b00;
+            background: #c51618;
             color: #fff;
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 11px;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 10px;
             font-weight: bold;
             text-transform: uppercase;
         }
 
         .tagline {
             color: #fff;
-            font-size: 32px;
+            font-size: 22px;
             font-weight: 700;
             line-height: 1.2;
         }
 
         .tagline span {
-            color: #ff6b00;
+            color: #c51618;
         }
 
         .subtitle {
             color: rgba(255, 255, 255, 0.7);
-            font-size: 16px;
+            font-size: 13px;
             max-width: 400px;
         }
 
         .features {
             display: flex;
-            gap: 40px;
+            gap: 25px;
         }
 
         .feature {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             color: rgba(255, 255, 255, 0.9);
-            font-size: 14px;
+            font-size: 12px;
         }
 
         .feature-icon {
-            width: 40px;
-            height: 40px;
-            background: rgba(255, 107, 0, 0.2);
+            width: 28px;
+            height: 28px;
+            background: rgba(197, 22, 24, 0.2);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 18px;
+            font-size: 14px;
         }
 
         .cta {
             align-self: flex-start;
-            background: #ff6b00;
+            background: #c51618;
             color: #fff;
-            padding: 16px 36px;
-            border-radius: 30px;
-            font-size: 16px;
+            padding: 12px 24px;
+            border-radius: 4px;
+            font-size: 13px;
             font-weight: bold;
             text-decoration: none;
             cursor: pointer;
-            box-shadow: 0 4px 20px rgba(255, 107, 0, 0.4);
+            box-shadow: 0 4px 20px rgba(197, 22, 24, 0.4);
             transition: all 0.3s ease;
         }
 
         .cta:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 30px rgba(255, 107, 0, 0.6);
-            background: #ff8533;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(197, 22, 24, 0.6);
+            background: #a01214;
         }
     </style>
 </head>
@@ -273,10 +276,10 @@
                 width="400" height="250" layout="fill"></amp-img>
             <div class="thermal-glow" id="thermalGlow"></div>
             <div class="thermal-cursor" id="thermalCursor"></div>
-            <div class="detection-badge" id="detectionBadge">⚠️ ¡Falla Detectada!<br><small
-                    style="font-weight:normal;font-size:12px;">Punto caliente identificado</small></div>
+            <div class="detection-badge" id="detectionBadge">Anomalía Térmica Detectada<br><small
+                    style="font-weight:normal;font-size:12px;">Punto de sobrecalentamiento identificado</small></div>
             <div class="hint-overlay">
-                <div class="hint" id="hint">👆 Mueve el cursor para detectar</div>
+                <div class="hint" id="hint">Deslice para revelar la imagen térmica</div>
             </div>
         </div>
 
@@ -292,21 +295,21 @@
 
             <div class="features">
                 <div class="feature">
-                    <div class="feature-icon">🔥</div>
+                    <div class="feature-icon"></div>
                     <span>Detección térmica</span>
                 </div>
                 <div class="feature">
-                    <div class="feature-icon">⚡</div>
+                    <div class="feature-icon"></div>
                     <span>Prevención de fallas</span>
                 </div>
                 <div class="feature">
-                    <div class="feature-icon">🎯</div>
+                    <div class="feature-icon"></div>
                     <span>Alta precisión</span>
                 </div>
             </div>
 
             <a href="https://www.colvinycia.cl/collections/camaras-termicas-flir" target="_blank" class="cta"
-                id="ctaButton">Ver Cámaras FLIR →</a>
+                id="ctaButton">VER CAMARAS FLIR</a>
         </div>
     </div>
 
@@ -331,7 +334,7 @@
             function updateThermalReveal(x, y) {
                 thermal.style.maskImage = `radial-gradient(circle ${revealRadius}px at ${x}px ${y}px, black 100%, transparent 101%)`;
                 thermal.style.webkitMaskImage = `radial-gradient(circle ${revealRadius}px at ${x}px ${y}px, black 100%, transparent 101%)`;
-                glow.style.background = `radial-gradient(circle ${revealRadius}px at ${x}px ${y}px, rgba(255, 107, 0, 0.3) 0%, transparent 70%)`;
+                glow.style.background = `radial-gradient(circle ${revealRadius}px at ${x}px ${y}px, rgba(197, 22, 24, 0.3) 0%, transparent 70%)`;
                 cursor.style.left = x + 'px';
                 cursor.style.top = y + 'px';
                 checkDetection(x, y);
