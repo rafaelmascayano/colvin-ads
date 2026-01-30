@@ -11,11 +11,17 @@
     <script async custom-element="amp-animation" src="https://cdn.ampproject.org/v0/amp-animation-0.1.js"></script>
 
     <style amp4ads-boilerplate>
-        body { visibility: hidden }
+        body {
+            visibility: hidden
+        }
     </style>
 
     <style amp-custom>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
         body {
             background: #000;
@@ -61,7 +67,9 @@
             object-fit: cover;
         }
 
-        .normal-view { z-index: 1; }
+        .normal-view {
+            z-index: 1;
+        }
 
         .thermal-view {
             z-index: 2;
@@ -71,7 +79,9 @@
             transition: opacity 0.3s ease;
         }
 
-        .thermal-view.active { opacity: 1; }
+        .thermal-view.active {
+            opacity: 1;
+        }
 
         .thermal-cursor {
             position: absolute;
@@ -89,7 +99,9 @@
             filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
         }
 
-        .thermal-cursor.active { opacity: 1; }
+        .thermal-cursor.active {
+            opacity: 1;
+        }
 
         .thermal-glow {
             position: absolute;
@@ -101,7 +113,9 @@
             transition: opacity 0.3s ease;
         }
 
-        .thermal-glow.active { opacity: 1; }
+        .thermal-glow.active {
+            opacity: 1;
+        }
 
         .detection-badge {
             position: absolute;
@@ -125,7 +139,10 @@
         }
 
         @keyframes popIn {
-            to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
         }
 
         .content-section {
@@ -157,11 +174,20 @@
             animation: pulse 2s ease-in-out infinite;
         }
 
-        .hint.hidden { opacity: 0; }
+        .hint.hidden {
+            opacity: 0;
+        }
 
         @keyframes pulse {
-            0%, 100% { opacity: 0.8; }
-            50% { opacity: 1; }
+
+            0%,
+            100% {
+                opacity: 0.8;
+            }
+
+            50% {
+                opacity: 1;
+            }
         }
 
         .features {
@@ -209,8 +235,10 @@
         <div class="logo">FLIR</div>
 
         <div class="image-section" id="imageSection">
-            <amp-img src="./normal.webp" alt="Vista normal" class="ad-layer normal-view" width="160" height="200" layout="fill"></amp-img>
-            <amp-img src="./thermal.webp" alt="Vista térmica FLIR" class="ad-layer thermal-view" id="thermalView" width="160" height="200" layout="fill"></amp-img>
+            <amp-img src="./normal.webp" alt="Vista normal" class="ad-layer normal-view" width="160" height="200"
+                layout="fill"></amp-img>
+            <amp-img src="./thermal.webp" alt="Vista térmica FLIR" class="ad-layer thermal-view" id="thermalView"
+                width="160" height="200" layout="fill"></amp-img>
             <div class="thermal-glow" id="thermalGlow"></div>
             <div class="thermal-cursor" id="thermalCursor"></div>
             <div class="detection-badge" id="detectionBadge">⚠️ ¡Falla!</div>
@@ -229,7 +257,8 @@
                 <div class="feature"><span class="feature-icon">🎯</span> Alta precisión</div>
             </div>
 
-            <a href="https://www.colvinycia.cl/collections/camaras-termicas-flir" target="_blank" class="cta" id="ctaButton">Ver Cámaras →</a>
+            <a href="https://www.colvinycia.cl/collections/camaras-termicas-flir" target="_blank" class="cta"
+                id="ctaButton">Ver Cámaras →</a>
         </div>
     </div>
 
@@ -249,7 +278,7 @@
             let interactionCount = 0;
             let detectionShown = false;
             const revealRadius = 35;
-            const detectionZone = { x: 80, y: 100, radius: 30 };
+            const detectionZone = { x: 70, y: 50, radius: 30 };
 
             function updateThermalReveal(x, y) {
                 thermal.style.maskImage = `radial-gradient(circle ${revealRadius}px at ${x}px ${y}px, black 100%, transparent 101%)`;
@@ -339,4 +368,5 @@
         })();
     </script>
 </body>
+
 </html>
