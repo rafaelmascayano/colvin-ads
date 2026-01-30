@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html ⚡4ads lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="ad.size" content="width=320,height=50">
+    <title>FLIR – Detecta lo Invisible</title>
+
+    <script async src="https://cdn.ampproject.org/amp4ads-v0.js"></script>
+
+    <style amp4ads-boilerplate>
+        body { visibility: hidden }
+    </style>
+
+    <style amp-custom>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+        }
+
+        .ad-container {
+            position: relative;
+            width: 320px;
+            height: 50px;
+            overflow: hidden;
+            background: linear-gradient(90deg, #1a1a1a 0%, #000 100%);
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            gap: 10px;
+        }
+
+        .image-section {
+            position: relative;
+            width: 50px;
+            height: 50px;
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+
+        .ad-layer {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .thermal-view {
+            animation: thermalPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes thermalPulse {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 1; }
+        }
+
+        .logo {
+            color: #fff;
+            font-size: 14px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            flex-shrink: 0;
+        }
+
+        .divider {
+            width: 1px;
+            height: 30px;
+            background: rgba(255, 255, 255, 0.2);
+            flex-shrink: 0;
+        }
+
+        .tagline {
+            flex: 1;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 11px;
+            line-height: 1.2;
+        }
+
+        .tagline span {
+            color: #ff6b00;
+            font-weight: bold;
+        }
+
+        .cta {
+            background: #ff6b00;
+            color: #fff;
+            padding: 8px 12px;
+            border-radius: 15px;
+            font-size: 10px;
+            font-weight: bold;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .cta:hover {
+            background: #ff8533;
+        }
+    </style>
+</head>
+
+<body>
+    <a href="https://www.colvinycia.cl/collections/camaras-termicas-flir" target="_blank" style="text-decoration: none;">
+        <div class="ad-container" id="adContainer">
+            <div class="image-section">
+                <amp-img src="./normal.webp" alt="Vista normal" class="ad-layer" width="50" height="50" layout="fill"></amp-img>
+                <amp-img src="./thermal.webp" alt="Vista térmica" class="ad-layer thermal-view" width="50" height="50" layout="fill"></amp-img>
+            </div>
+
+            <div class="logo">FLIR</div>
+            <div class="divider"></div>
+            <div class="tagline">Detecta lo <span>Invisible</span></div>
+            <div class="cta">Ver →</div>
+        </div>
+    </a>
+
+    <script>
+        (function () {
+            'use strict';
+
+            document.querySelector('.ad-container').addEventListener('click', function() {
+                if (typeof window.gtag !== 'undefined') {
+                    window.gtag('event', 'click', { 'event_category': 'cta', 'event_label': 'mobile_leaderboard' });
+                }
+                if (typeof Enabler !== 'undefined' && Enabler.isInitialized()) {
+                    Enabler.counter('cta_click');
+                }
+            });
+        })();
+    </script>
+</body>
+</html>

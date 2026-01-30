@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html ⚡4ads lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="ad.size" content="width=970,height=250">
+    <title>FLIR – Detecta lo Invisible</title>
+
+    <script async src="https://cdn.ampproject.org/amp4ads-v0.js"></script>
+    <script async custom-element="amp-animation" src="https://cdn.ampproject.org/v0/amp-animation-0.1.js"></script>
+
+    <style amp4ads-boilerplate>
+        body { visibility: hidden }
+    </style>
+
+    <style amp-custom>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+        }
+
+        .ad-container {
+            position: relative;
+            width: 970px;
+            height: 250px;
+            overflow: hidden;
+            background: linear-gradient(90deg, #1a1a1a 0%, #000 100%);
+            cursor: none;
+            display: flex;
+        }
+
+        .image-section {
+            position: relative;
+            width: 400px;
+            height: 250px;
+            flex-shrink: 0;
+        }
+
+        .ad-layer {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .normal-view { z-index: 1; }
+
+        .thermal-view {
+            z-index: 2;
+            opacity: 0;
+            mask-image: radial-gradient(circle 0px at 50% 50%, black 100%, transparent 101%);
+            -webkit-mask-image: radial-gradient(circle 0px at 50% 50%, black 100%, transparent 101%);
+            transition: opacity 0.3s ease;
+        }
+
+        .thermal-view.active { opacity: 1; }
+
+        .thermal-cursor {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            pointer-events: none;
+            z-index: 10;
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            background-image: url('./camara.webp');
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+            filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
+        }
+
+        .thermal-cursor.active { opacity: 1; }
+
+        .thermal-glow {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 3;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .thermal-glow.active { opacity: 1; }
+
+        .detection-badge {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            background: rgba(255, 107, 0, 0.95);
+            color: #fff;
+            padding: 15px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: bold;
+            text-align: center;
+            z-index: 15;
+            pointer-events: none;
+            box-shadow: 0 8px 30px rgba(255, 107, 0, 0.5);
+            opacity: 0;
+        }
+
+        .detection-badge.show {
+            animation: popIn 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+        }
+
+        @keyframes popIn {
+            to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+        }
+
+        .hint-overlay {
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 6;
+        }
+
+        .hint {
+            color: #fff;
+            font-size: 12px;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 8px 16px;
+            border-radius: 20px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .hint.hidden { opacity: 0; }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.8; }
+            50% { opacity: 1; }
+        }
+
+        .content-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 30px 50px;
+            gap: 25px;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo {
+            color: #fff;
+            font-size: 36px;
+            font-weight: bold;
+            letter-spacing: 4px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .badge {
+            background: #ff6b00;
+            color: #fff;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .tagline {
+            color: #fff;
+            font-size: 32px;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .tagline span {
+            color: #ff6b00;
+        }
+
+        .subtitle {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 16px;
+            max-width: 400px;
+        }
+
+        .features {
+            display: flex;
+            gap: 40px;
+        }
+
+        .feature {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 14px;
+        }
+
+        .feature-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 107, 0, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .cta {
+            align-self: flex-start;
+            background: #ff6b00;
+            color: #fff;
+            padding: 16px 36px;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: bold;
+            text-decoration: none;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(255, 107, 0, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(255, 107, 0, 0.6);
+            background: #ff8533;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="ad-container" id="adContainer">
+        <div class="image-section" id="imageSection">
+            <amp-img src="./normal.webp" alt="Vista normal" class="ad-layer normal-view" width="400" height="250" layout="fill"></amp-img>
+            <amp-img src="./thermal.webp" alt="Vista térmica FLIR" class="ad-layer thermal-view" id="thermalView" width="400" height="250" layout="fill"></amp-img>
+            <div class="thermal-glow" id="thermalGlow"></div>
+            <div class="thermal-cursor" id="thermalCursor"></div>
+            <div class="detection-badge" id="detectionBadge">⚠️ ¡Falla Detectada!<br><small style="font-weight:normal;font-size:12px;">Punto caliente identificado</small></div>
+            <div class="hint-overlay">
+                <div class="hint" id="hint">👆 Mueve el cursor para detectar</div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <div class="header">
+                <div class="logo">FLIR</div>
+                <div class="badge">Profesional</div>
+            </div>
+
+            <div class="tagline">Detecta lo <span>Invisible</span></div>
+            <div class="subtitle">Cámaras térmicas de alta precisión para mantenimiento predictivo y prevención de fallas</div>
+
+            <div class="features">
+                <div class="feature">
+                    <div class="feature-icon">🔥</div>
+                    <span>Detección térmica</span>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">⚡</div>
+                    <span>Prevención de fallas</span>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">🎯</div>
+                    <span>Alta precisión</span>
+                </div>
+            </div>
+
+            <a href="https://www.colvinycia.cl/collections/camaras-termicas-flir" target="_blank" class="cta" id="ctaButton">Ver Cámaras FLIR →</a>
+        </div>
+    </div>
+
+    <script>
+        (function () {
+            'use strict';
+
+            const imageSection = document.getElementById('imageSection');
+            const thermal = document.getElementById('thermalView');
+            const cursor = document.getElementById('thermalCursor');
+            const hint = document.getElementById('hint');
+            const badge = document.getElementById('detectionBadge');
+            const cta = document.getElementById('ctaButton');
+            const glow = document.getElementById('thermalGlow');
+
+            let isInteracting = false;
+            let interactionCount = 0;
+            let detectionShown = false;
+            const revealRadius = 60;
+            const detectionZone = { x: 200, y: 125, radius: 50 };
+
+            function updateThermalReveal(x, y) {
+                thermal.style.maskImage = `radial-gradient(circle ${revealRadius}px at ${x}px ${y}px, black 100%, transparent 101%)`;
+                thermal.style.webkitMaskImage = `radial-gradient(circle ${revealRadius}px at ${x}px ${y}px, black 100%, transparent 101%)`;
+                glow.style.background = `radial-gradient(circle ${revealRadius}px at ${x}px ${y}px, rgba(255, 107, 0, 0.3) 0%, transparent 70%)`;
+                cursor.style.left = x + 'px';
+                cursor.style.top = y + 'px';
+                checkDetection(x, y);
+            }
+
+            function checkDetection(x, y) {
+                if (detectionShown) return;
+                const distance = Math.sqrt(Math.pow(x - detectionZone.x, 2) + Math.pow(y - detectionZone.y, 2));
+                if (distance < detectionZone.radius) showDetection();
+            }
+
+            function showDetection() {
+                detectionShown = true;
+                badge.classList.add('show');
+                trackEvent('detection', 'fault_found', 'thermal_reveal');
+                setTimeout(() => { badge.classList.remove('show'); }, 2500);
+            }
+
+            imageSection.addEventListener('mouseenter', () => {
+                if (!isInteracting) {
+                    isInteracting = true;
+                    thermal.classList.add('active');
+                    cursor.classList.add('active');
+                    glow.classList.add('active');
+                    hint.classList.add('hidden');
+                    trackEvent('interaction', 'start', 'mouse_enter');
+                }
+            });
+
+            imageSection.addEventListener('mousemove', (e) => {
+                const rect = imageSection.getBoundingClientRect();
+                updateThermalReveal(e.clientX - rect.left, e.clientY - rect.top);
+                interactionCount++;
+            });
+
+            imageSection.addEventListener('mouseleave', () => {
+                thermal.classList.remove('active');
+                cursor.classList.remove('active');
+                glow.classList.remove('active');
+                if (interactionCount < 10) hint.classList.remove('hidden');
+            });
+
+            imageSection.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                thermal.classList.add('active');
+                glow.classList.add('active');
+                hint.classList.add('hidden');
+                trackEvent('interaction', 'start', 'touch');
+            });
+
+            imageSection.addEventListener('touchmove', (e) => {
+                e.preventDefault();
+                const rect = imageSection.getBoundingClientRect();
+                const touch = e.touches[0];
+                updateThermalReveal(touch.clientX - rect.left, touch.clientY - rect.top);
+            });
+
+            imageSection.addEventListener('touchend', () => {
+                thermal.classList.remove('active');
+                glow.classList.remove('active');
+            });
+
+            cta.addEventListener('click', () => { trackEvent('cta', 'click', 'ver_camaras'); });
+
+            function trackEvent(category, action, label) {
+                console.log(`Event: ${category} | ${action} | ${label}`);
+                if (typeof window.gtag !== 'undefined') {
+                    window.gtag('event', action, { 'event_category': category, 'event_label': label });
+                }
+                if (typeof Enabler !== 'undefined' && Enabler.isInitialized()) {
+                    Enabler.counter(category + '_' + action);
+                }
+            }
+
+            setTimeout(() => {
+                if (interactionCount === 0) hint.style.animation = 'pulse 1s ease-in-out 3';
+            }, 3000);
+        })();
+    </script>
+</body>
+</html>
