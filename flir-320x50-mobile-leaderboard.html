@@ -1,144 +1,92 @@
 <!DOCTYPE html>
-<html ⚡4ads lang="es">
-
+<html lang="es">
 <head>
     <meta charset="UTF-8">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="ad.size" content="width=320,height=50">
-    <title>FLIR – Termografía Profesional</title>
-
-    <script async src="https://cdn.ampproject.org/amp4ads-v0.js"></script>
-
-    <style amp4ads-boilerplate>
-        body { visibility: hidden }
-    </style>
-
-    <style amp-custom>
+    <title>Visor Térmico FLIR</title>
+    <script type="text/javascript">
+        var clickTag = "https://www.colvinycia.cl/collections/camaras-termicas-flir"\;
+    </script>
+    <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        body {
-            background: #000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
-        }
-
-        .ad-container {
-            position: relative;
-            width: 320px;
-            height: 50px;
-            overflow: hidden;
-            background: linear-gradient(90deg, #1a1a1a 0%, #000 100%);
-            display: flex;
-            align-items: center;
-            padding: 0 10px;
-            gap: 10px;
-        }
-
-        .image-section {
-            position: relative;
-            width: 50px;
-            height: 50px;
-            flex-shrink: 0;
-            overflow: hidden;
-        }
-
-        .ad-layer {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .thermal-view {
-            animation: thermalPulse 3s ease-in-out infinite;
-        }
-
-        @keyframes thermalPulse {
-            0%, 100% { opacity: 0; }
-            50% { opacity: 1; }
-        }
-
-        .logo {
-            color: #fff;
-            font-size: 14px;
-            font-weight: bold;
-            letter-spacing: 1px;
-            flex-shrink: 0;
-        }
-
-        .divider {
-            width: 1px;
-            height: 30px;
-            background: rgba(255, 255, 255, 0.2);
-            flex-shrink: 0;
-        }
-
-        .tagline {
-            flex: 1;
-            color: rgba(255, 255, 255, 0.9);
-            font-size: 11px;
-            line-height: 1.2;
-        }
-
-        .tagline span {
-            color: #c51618;
-            font-weight: bold;
-        }
-
-        .cta {
-            background: #c51618;
-            color: #fff;
-            padding: 8px 12px;
-            border-radius: 3px;
-            font-size: 10px;
-            font-weight: bold;
-            text-decoration: none;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            white-space: nowrap;
-            flex-shrink: 0;
-        }
-
-        .cta:hover {
-            background: #a01214;
-        }
+        body { width: 320px; height: 50px; overflow: hidden; background: #000; display: flex; justify-content: center; align-items: center; }
+        #ad-container { position: relative; width: 320px; height: 50px; overflow: hidden; background: #000; cursor: none; -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; }
+        .layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+        #normal-layer { z-index: 1; }
+        #thermal-layer { z-index: 2; opacity: 0; transition: opacity 0.2s ease; -webkit-mask-image: radial-gradient(circle 0px at 50% 50%, black 100%, transparent 101%); mask-image: radial-gradient(circle 0px at 50% 50%, black 100%, transparent 101%); }
+        #thermal-layer.active { opacity: 1; }
+        #custom-cursor { position: absolute; width: 72px; height: 54px; transform: translate(-50%, -50%); pointer-events: none; z-index: 10; background-image: url('./camara.webp'); background-size: contain; background-position: center; background-repeat: no-repeat; opacity: 0; transition: opacity 0.2s ease; }
+        #custom-cursor.active { opacity: 1; }
+        #overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 20; pointer-events: none; display: flex; justify-content: center; align-items: center; }
+        #cta-button { background: rgba(0, 0, 0, 0.8); color: #fff; padding: 8px 12px; border-radius: 3px; font-size: 10px; font-weight: 700; text-transform: uppercase; border: 1px solid rgba(255, 255, 255, 0.3); pointer-events: auto; cursor: pointer; transition: all 0.3s ease; }
+        #cta-button:hover { background: #c51618; border-color: #c51618; }
     </style>
 </head>
-
 <body>
-    <a href="https://www.colvinycia.cl/collections/camaras-termicas-flir" target="_blank" style="text-decoration: none;">
-        <div class="ad-container" id="adContainer">
-            <div class="image-section">
-                <amp-img src="./normal.webp" alt="Vista normal" class="ad-layer" width="50" height="50" layout="fill"></amp-img>
-                <amp-img src="./thermal.webp" alt="Vista térmica" class="ad-layer thermal-view" width="50" height="50" layout="fill"></amp-img>
-            </div>
-
-            <div class="logo">FLIR</div>
-            <div class="divider"></div>
-            <div class="tagline">Detecta lo <span>Invisible</span></div>
-            <div class="cta">VER</div>
+    <div id="ad-container">
+        <img src="./normal.webp" alt="Vista Normal" class="layer" id="normal-layer">
+        <img src="./thermal.webp" alt="Vista Térmica" class="layer" id="thermal-layer">
+        <div id="custom-cursor"></div>
+        <div id="overlay">
+            <div id="cta-button">VER</div>
         </div>
-    </a>
-
+    </div>
     <script>
-        (function () {
-            'use strict';
-
-            document.querySelector('.ad-container').addEventListener('click', function() {
-                if (typeof window.gtag !== 'undefined') {
-                    window.gtag('event', 'click', { 'event_category': 'cta', 'event_label': 'mobile_leaderboard' });
-                }
-                if (typeof Enabler !== 'undefined' && Enabler.isInitialized()) {
-                    Enabler.counter('cta_click');
-                }
+        document.addEventListener('DOMContentLoaded', () => {
+            const container = document.getElementById('ad-container');
+            const thermalLayer = document.getElementById('thermal-layer');
+            const customCursor = document.getElementById('custom-cursor');
+            const ctaButton = document.getElementById('cta-button');
+            const revealRadius = 25;
+            function moveMagnifier(x, y) {
+                customCursor.style.left = x + 'px';
+                customCursor.style.top = y + 'px';
+                const maskStyle = `radial-gradient(circle ${revealRadius}px at ${x}px ${y}px, black 100%, transparent 101%)`;
+                thermalLayer.style.webkitMaskImage = maskStyle;
+                thermalLayer.style.maskImage = maskStyle;
+            }
+            container.addEventListener('mouseenter', () => {
+                thermalLayer.classList.add('active');
+                customCursor.classList.add('active');
             });
-        })();
+            container.addEventListener('mouseleave', () => {
+                thermalLayer.classList.remove('active');
+                customCursor.classList.remove('active');
+            });
+            container.addEventListener('mousemove', (e) => {
+                const rect = container.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                moveMagnifier(x, y);
+            });
+            container.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                thermalLayer.classList.add('active');
+                customCursor.classList.add('active');
+                const rect = container.getBoundingClientRect();
+                const touch = e.touches[0];
+                const x = touch.clientX - rect.left;
+                const y = touch.clientY - rect.top;
+                moveMagnifier(x, y);
+            }, { passive: false });
+            container.addEventListener('touchmove', (e) => {
+                e.preventDefault();
+                const rect = container.getBoundingClientRect();
+                const touch = e.touches[0];
+                const x = touch.clientX - rect.left;
+                const y = touch.clientY - rect.top;
+                moveMagnifier(x, y);
+            }, { passive: false });
+            container.addEventListener('touchend', () => {
+                thermalLayer.classList.remove('active');
+                customCursor.classList.remove('active');
+            });
+            function openClickTag() {
+                window.open(window.clickTag, '_blank');
+            }
+            ctaButton.addEventListener('click', openClickTag);
+        });
     </script>
 </body>
 </html>

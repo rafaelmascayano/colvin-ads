@@ -1,259 +1,155 @@
 <!DOCTYPE html>
-<html ⚡4ads lang="es">
-
+<html lang="es">
 <head>
     <meta charset="UTF-8">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
     <meta name="ad.size" content="width=320,height=100">
-    <title>FLIR – Termografía Profesional</title>
+    
+    <title>Visor Térmico FLIR</title>
 
-    <script async src="https://cdn.ampproject.org/amp4ads-v0.js"></script>
-    <script async custom-element="amp-animation" src="https://cdn.ampproject.org/v0/amp-animation-0.1.js"></script>
+    <script type="text/javascript">
+        var clickTag = "https://www.colvinycia.cl/collections/camaras-termicas-flir"; 
+    </script>
 
-    <style amp4ads-boilerplate>
-        body { visibility: hidden }
-    </style>
-
-    <style amp-custom>
+    <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
         body {
+            width: 320px; height: 100px;
+            margin: 0; padding: 0; overflow: hidden;
             background: #000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            display: flex; justify-content: center; align-items: center;
         }
 
-        .ad-container {
+        #ad-container {
             position: relative;
-            width: 320px;
-            height: 100px;
-            overflow: hidden;
-            background: linear-gradient(90deg, #1a1a1a 0%, #000 100%);
-            display: flex;
+            width: 320px; height: 100px;
+            overflow: hidden; background: #000;
             cursor: none;
+            touch-action: none; -webkit-touch-callout: none; -webkit-user-select: none; user-select: none;
         }
 
-        .image-section {
-            position: relative;
-            width: 120px;
-            height: 100px;
-            flex-shrink: 0;
+        .layer {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: cover; pointer-events: none; will-change: opacity;
         }
 
-        .ad-layer {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+        #normal-layer { z-index: 1; }
+
+        #thermal-layer {
+            z-index: 2; opacity: 0; transition: opacity 0.2s ease-out;
+            -webkit-mask-image: linear-gradient(black, black); mask-image: linear-gradient(black, black);
+            -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+            -webkit-mask-position: -1000px -1000px; mask-position: -1000px -1000px;
+        }
+        #thermal-layer.active { opacity: 1; }
+
+        #custom-cursor {
+            position: absolute; top: 50%; left: 50%;
+            width: 192px; height: 54px;
+            transform: translate(-50%, -50%); z-index: 10; pointer-events: none;
+            background-image: url('./camara.webp'); 
+            background-size: contain; background-position: center; background-repeat: no-repeat;
+            opacity: 0; transition: opacity 0.2s ease-out; will-change: top, left;
+        }
+        #custom-cursor.active { opacity: 1; }
+
+        #overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 20;
+            pointer-events: none; display: flex; flex-direction: column; justify-content: flex-end; padding: 15px;
         }
 
-        .normal-view { z-index: 1; }
-
-        .thermal-view {
-            z-index: 2;
-            opacity: 0;
-            mask-image: radial-gradient(circle 0px at 50% 50%, black 100%, transparent 101%);
-            -webkit-mask-image: radial-gradient(circle 0px at 50% 50%, black 100%, transparent 101%);
-            transition: opacity 0.3s ease;
+        #cta-button {
+            align-self: center; background: rgba(0, 0, 0, 0.8); color: #fff;
+            padding: 10px 20px; border-radius: 4px; font-size: 13px; font-weight: 700;
+            text-transform: uppercase; border: 1px solid rgba(255, 255, 255, 0.3);
+            pointer-events: auto; cursor: pointer; transition: all 0.3s ease;
         }
-
-        .thermal-view.active { opacity: 1; }
-
-        .thermal-cursor {
-            position: absolute;
-            width: 60px;
-            height: 60px;
-            pointer-events: none;
-            z-index: 10;
-            transform: translate(-50%, -50%);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            background-image: url('./camara.webp');
-            background-size: contain;
-            background-position: center;
-            background-repeat: no-repeat;
-        }
-
-        .thermal-cursor.active { opacity: 1; }
-
-        .thermal-glow {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            z-index: 3;
-            pointer-events: none;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .thermal-glow.active { opacity: 1; }
-
-        .content-section {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            padding: 10px 15px;
-            gap: 8px;
-        }
-
-        .header {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .logo {
-            color: #fff;
-            font-size: 16px;
-            font-weight: bold;
-            letter-spacing: 1px;
-        }
-
-        .badge {
-            background: #c51618;
-            color: #fff;
-            padding: 2px 6px;
-            border-radius: 8px;
-            font-size: 8px;
-            font-weight: bold;
-        }
-
-        .tagline {
-            color: rgba(255, 255, 255, 0.9);
-            font-size: 12px;
-        }
-
-        .tagline span {
-            color: #c51618;
-            font-weight: bold;
-        }
-
-        .hint {
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 9px;
-            animation: pulse 2s ease-in-out infinite;
-        }
-
-        .hint.hidden { opacity: 0; }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 0.6; }
-            50% { opacity: 1; }
-        }
-
-        .cta {
-            background: #c51618;
-            color: #fff;
-            padding: 8px 16px;
-            border-radius: 4px;
-            font-size: 11px;
-            font-weight: bold;
-            text-decoration: none;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            align-self: flex-start;
-        }
-
-        .cta:hover {
-            background: #a01214;
-            transform: translateY(-1px);
-        }
+        #cta-button:hover { background: #c51618; border-color: #c51618; }
     </style>
 </head>
-
 <body>
-    <div class="ad-container" id="adContainer">
-        <div class="image-section" id="imageSection">
-            <amp-img src="./normal.webp" alt="Vista normal" class="ad-layer normal-view" width="120" height="100" layout="fill"></amp-img>
-            <amp-img src="./thermal.webp" alt="Vista térmica FLIR" class="ad-layer thermal-view" id="thermalView" width="120" height="100" layout="fill"></amp-img>
-            <div class="thermal-glow" id="thermalGlow"></div>
-            <div class="thermal-cursor" id="thermalCursor"></div>
-        </div>
-
-        <div class="content-section">
-            <div class="header">
-                <div class="logo">FLIR</div>
-                <div class="badge">TÉRMICO</div>
-            </div>
-            <div class="tagline">Detecta lo <span>Invisible</span></div>
-            <div class="hint" id="hint">Toque la imagen para explorar</div>
-            <a href="https://www.colvinycia.cl/collections/camaras-termicas-flir" target="_blank" class="cta" id="ctaButton">VER CAMARAS</a>
+    <div id="ad-container">
+        <img src="./normal.webp" alt="" class="layer" id="normal-layer">
+        <img src="./thermal.webp" alt="" class="layer" id="thermal-layer">
+        <div id="custom-cursor"></div>
+        <div id="overlay">
+            <div id="cta-button">Ver Cámaras FLIR</div>
         </div>
     </div>
 
     <script>
-        (function () {
-            'use strict';
+        document.addEventListener('DOMContentLoaded', () => {
+            const container = document.getElementById('ad-container');
+            const thermalLayer = document.getElementById('thermal-layer');
+            const customCursor = document.getElementById('custom-cursor');
+            const ctaButton = document.getElementById('cta-button');
+            
+            const screenW = 115;
+            const screenH = 31;
+            const offsetX = 0; 
+            const offsetY = 2;
 
-            const imageSection = document.getElementById('imageSection');
-            const thermal = document.getElementById('thermalView');
-            const cursor = document.getElementById('thermalCursor');
-            const hint = document.getElementById('hint');
-            const cta = document.getElementById('ctaButton');
-            const glow = document.getElementById('thermalGlow');
+            const maskSizeValue = `${screenW}px ${screenH}px`;
+            thermalLayer.style.webkitMaskSize = maskSizeValue;
+            thermalLayer.style.maskSize = maskSizeValue;
 
+            let mouseX = 0, mouseY = 0;
             let isInteracting = false;
-            const revealRadius = 30;
+            let animationFrameId = null;
 
-            function updateThermalReveal(x, y) {
-                thermal.style.maskImage = `radial-gradient(circle ${revealRadius}px at ${x}px ${y}px, black 100%, transparent 101%)`;
-                thermal.style.webkitMaskImage = `radial-gradient(circle ${revealRadius}px at ${x}px ${y}px, black 100%, transparent 101%)`;
-                glow.style.background = `radial-gradient(circle ${revealRadius}px at ${x}px ${y}px, rgba(197, 22, 24, 0.3) 0%, transparent 70%)`;
-                cursor.style.left = x + 'px';
-                cursor.style.top = y + 'px';
+            function render() {
+                if (!isInteracting) return;
+                customCursor.style.left = mouseX + 'px';
+                customCursor.style.top = mouseY + 'px';
+
+                const maskPosX = (mouseX - (screenW / 2)) + offsetX;
+                const maskPosY = (mouseY - (screenH / 2)) + offsetY;
+                const maskPosValue = `${maskPosX}px ${maskPosY}px`;
+
+                thermalLayer.style.webkitMaskPosition = maskPosValue;
+                thermalLayer.style.maskPosition = maskPosValue;
+                animationFrameId = requestAnimationFrame(render);
             }
 
-            imageSection.addEventListener('mouseenter', () => {
-                isInteracting = true;
-                thermal.classList.add('active');
-                cursor.classList.add('active');
-                glow.classList.add('active');
-                hint.classList.add('hidden');
-            });
-
-            imageSection.addEventListener('mousemove', (e) => {
-                const rect = imageSection.getBoundingClientRect();
-                updateThermalReveal(e.clientX - rect.left, e.clientY - rect.top);
-            });
-
-            imageSection.addEventListener('mouseleave', () => {
-                thermal.classList.remove('active');
-                cursor.classList.remove('active');
-                glow.classList.remove('active');
-            });
-
-            imageSection.addEventListener('touchstart', (e) => {
-                e.preventDefault();
-                thermal.classList.add('active');
-                glow.classList.add('active');
-                hint.classList.add('hidden');
-            });
-
-            imageSection.addEventListener('touchmove', (e) => {
-                e.preventDefault();
-                const rect = imageSection.getBoundingClientRect();
-                const touch = e.touches[0];
-                updateThermalReveal(touch.clientX - rect.left, touch.clientY - rect.top);
-            });
-
-            imageSection.addEventListener('touchend', () => {
-                thermal.classList.remove('active');
-                glow.classList.remove('active');
-            });
-
-            cta.addEventListener('click', () => {
-                if (typeof window.gtag !== 'undefined') {
-                    window.gtag('event', 'click', { 'event_category': 'cta', 'event_label': 'large_mobile_banner' });
+            function updatePosition(x, y) {
+                mouseX = x; mouseY = y;
+                if (!isInteracting) {
+                    isInteracting = true;
+                    thermalLayer.classList.add('active');
+                    customCursor.classList.add('active');
+                    if (animationFrameId === null) animationFrameId = requestAnimationFrame(render);
                 }
+            }
+
+            function stopInteraction() {
+                isInteracting = false;
+                thermalLayer.classList.remove('active');
+                customCursor.classList.remove('active');
+                if (animationFrameId !== null) {
+                    cancelAnimationFrame(animationFrameId);
+                    animationFrameId = null;
+                }
+            }
+
+            container.addEventListener('mousemove', (e) => {
+                const rect = container.getBoundingClientRect();
+                updatePosition(e.clientX - rect.left, e.clientY - rect.top);
             });
-        })();
+            container.addEventListener('mouseleave', stopInteraction);
+            container.addEventListener('touchstart', (e) => {
+                const rect = container.getBoundingClientRect();
+                updatePosition(e.touches[0].clientX - rect.left, e.touches[0].clientY - rect.top);
+            }, { passive: true });
+            container.addEventListener('touchmove', (e) => {
+                const rect = container.getBoundingClientRect();
+                updatePosition(e.touches[0].clientX - rect.left, e.touches[0].clientY - rect.top);
+            }, { passive: true });
+            container.addEventListener('touchend', stopInteraction);
+            container.addEventListener('touchcancel', stopInteraction);
+            ctaButton.addEventListener('click', () => window.open(window.clickTag, '_blank'));
+        });
     </script>
 </body>
 </html>

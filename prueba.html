@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     
-    <meta name="ad.size" content="width=468,height=60">
+    <!-- 1. META TAG DE TAMAÑO -->
+    <meta name="ad.size" content="width=300,height=250"> <!-- ⬅️ CAMBIAR ESTO SEGÚN EL TAMAÑO -->
     
     <title>Visor Térmico FLIR</title>
 
@@ -15,7 +16,8 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            width: 468px; height: 60px;
+            /* 2. TAMAÑO DEL BODY */
+            width: 300px; height: 250px; /* ⬅️ CAMBIAR ESTO SEGÚN EL TAMAÑO */
             margin: 0; padding: 0; overflow: hidden;
             background: #000;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -24,7 +26,8 @@
 
         #ad-container {
             position: relative;
-            width: 468px; height: 60px;
+            /* 3. TAMAÑO DEL CONTENEDOR (Igual que el body) */
+            width: 300px; height: 250px; /* ⬅️ CAMBIAR ESTO SEGÚN EL TAMAÑO */
             overflow: hidden; background: #000;
             cursor: none;
             touch-action: none; -webkit-touch-callout: none; -webkit-user-select: none; user-select: none;
@@ -47,7 +50,10 @@
 
         #custom-cursor {
             position: absolute; top: 50%; left: 50%;
-            width: 280px; height: 32px;
+            
+            /* 4. TAMAÑO DEL VISOR (Opcional: reducir para banners muy pequeños) */
+            width: 180px; height: 135px; /* ⬅️ CAMBIAR ESTO SI ES NECESARIO */
+            
             transform: translate(-50%, -50%); z-index: 10; pointer-events: none;
             background-image: url('./camara.webp'); 
             background-size: contain; background-position: center; background-repeat: no-repeat;
@@ -86,8 +92,13 @@
             const customCursor = document.getElementById('custom-cursor');
             const ctaButton = document.getElementById('cta-button');
             
-            const screenW = 168;
-            const screenH = 18;
+            // --- 5. CONFIGURACIÓN DE LA PANTALLA TÉRMICA ---
+            // IMPORTANTE: Si cambiaste el tamaño del visor (#custom-cursor) en el CSS,
+            // debes ajustar estos valores proporcionalmente.
+            // Valores base para visor de 180x135: screenW = 108, screenH = 78
+            
+            const screenW = 108; // ⬅️ CAMBIAR SI SE REDUJO EL VISOR
+            const screenH = 78;  // ⬅️ CAMBIAR SI SE REDUJO EL VISOR
             const offsetX = 0; 
             const offsetY = 2;
 
